@@ -1,0 +1,45 @@
+---
+title: "Analyzing Customer Sentiment:A Case Study on Credit Card Consumer Complaints from Consumer Protection FederalBureau"
+author: "Natasha Medina"
+date: "April 5, 2017"
+output: html_document
+---
+
+## R Markdown
+
+# Header 1 Question:
+
+**Can I identify the consumer credit cards try to determine which issuer will best meet their needs?**
+
+Purpose: This will hopefully manifest itself in more consumer-friendly policies and an increased emphasis on resolving problems quickly and fairly. Can I uncover relatinshipsfrequent patterns and identifying what groups of consumers
+
+**What will your client decide based on your analysis that they wouldn't have otherwise? or in other words, why are they care about this problem?**
+
+This quantiative research will involve clustering and association analysis of Consumer Federal Protection Bureau: Consumer Complaint Narrative on Credit Card Companies throughout the span of 5 year span.
+CFPB is an independent federal agency built to protect consumers. CFPB write and enforce rules that keep banks and other financial companies operating fairly. My client is a financial services banking institution that provides credit cards to consumers that is seeking me to verify the sentiment analysis, identify key relationships, and what groups of consumers needs are?
+
+**Approach** 
+
+1) I will create a summary which credit card institutions have the best and worse ratings amongst the consumer complaint narrative and how it was resolved based on the dataset for 2011-2016.
+2) I will analyze consumer sentiment, what relationships do I discover between the companies and consumer.
+3) Our goal is to differentiate what kind of things are mentioned in the consumer complaints narriative? To discover and identify consumer common groups, I plan on using text mining classifcation, andclustering.
+
+**Description of the dataset**?
+
+I plan on using the Consumer Protectional Federal Bureau database of consumer complaints that include the narratives on reporting to the bureau about Credit Card Companies. 
+
+I have access to Consumer Federal Protectional Bureau API on their website. The data set set consit of a data frame contains issue of the consumer, tags of consumer whether they are an older american or service member, the state where the consumer is from, the date recieved from consumer to CFPB, the company response to the consumer, consumer consent provided.
+
+
+**What are your deliverables?**
+
+I plan on providing list of codes, a Capstone final report, and slideshow to explain the insights that I discovered throguhout this process.
+
+1) Recommend to Consumers as they compare credit cards and try to determine which issuer will best meet their needs
+2) Identify the relationships between consumers and credit ard companies how quickly were problems resolved and fairly.
+3) Provide insights to the client on how to handle future consumers based on this dataset.
+
+
+
+
+
