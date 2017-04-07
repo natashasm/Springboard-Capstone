@@ -7,7 +7,7 @@ output: html_document
 
 ## R Markdown
 
-# Header 1 Question:
+# Question:
 
 **Can I identify the consumer credit cards try to determine which issuer will best meet their needs?**
 
