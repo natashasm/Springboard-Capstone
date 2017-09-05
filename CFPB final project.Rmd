@@ -1,0 +1,749 @@
+---
+title: "CFPB Consumer Protection Bureau"
+author: "Natasha Medina"
+date: "7/19/2017"
+output:
+  html_document: default
+  word_document: default
+---
+
+
+## R Markdown
+
+##Consumer Financial Protection Bureau Customer Reviews Analytics
+
+###Course: Springboard- Foundations of Data Science: Capstone Project Report
+
+##Natasha Medina
+###July 2, 2017
+
+
+
+
+##Contents:
+1.	Introduction-Background
+2.	 Data Acquisition from CFPB
+   + 2.1	CFPB Website
+3.	Exploring relationships between the variables
+   +  3.1 Overview of CFPB Consumer Complaint Database
+   +  3.2 One of most common type of credit card complaints: Identity Theft
+   +  3.3 One of most common type of credit card complaints: Billing Disputes from Credit Card Industry
+   +  3.4 Rest of common types of Credit Complaints from CFPB:
+   +  3.5 Top 10 Companys recieve Complaints
+   +  3.6 Exploration of CFPB complaints by State
+   +  3.7 Exploration on Timely Response of Credit Card Companies
+4.	Text Analytics: Data Acquisition
+   +  4.1 Data Wrangling and PreProcessing:
+   +  4.2	CFPB Customer Complaints on Credit Card Companies Text and Sentiment Analysis
+   +  4.3	Association Analysis
+   +  4.4 CFPB Customer Complaints on Credit Card Companies Text and Sentiment Analysis
+5.  Conclusion, Recommendations and Future Directions
+
+
+----------------------------
+
+
+Objective: Improving and Gathering Insights from Consumer Complaints from Consumer Federal Protection Bureau.
+
+1.	Introduction- 
+Background:
+    CFPB main objective to eradicate potential unfair, deceptive, or abusive acts or practices(UDAAP) that violate the Consumer Financial Protection Act and other consumer financial laws,the CFPB has broad power to examine the practices both banks and non-banks. And while banks with more than $10 billion in assets fall directly under CFPB regulations, any provider of consumer financial products and services. Recently as of now 2013, it released a complaint narrative database (“CFPB Examinations," 2016).
+    
+The Publication of Consumer Credit Cards complaints adds accountability for the credit card companies. They know that if they act improperly, more people will be aware of it and their reputations will be damaged as result (“CFPB Examinations”, 2016). This will hopefully manifest itself in more consumer-friendly policies and an increased emphasis on resolving problems quickly and fairly.
+
+Consumer Financial Protection Bureau has set up its own complaints database that any consumer can access to a file complaint that any consumer can access to file a complaint against a financial service provider. So service providers need to ensure their own complaints management systems are serving the needs of customers to avoid becoming a line item in the CFPB’s complaints database. According to Service Insights Blog, states that the intention the regulation is to help banks run a good business and stay competitive and complaint, to meet the credit needs of the consumer while running a sound business. 
+
+CFPB states, “by submitting a complaint, consumers can be heard by financial companies, get help with their own issues, and help others avoid similar ones.”(CFPB website). Complaints are valuable feedback, and they can provide both direct and indirect insights into what a financial institution is doing well and what it needs to work on. Complaints can help proactively identify trends and identify broader product and line of business service issues before they become systemic problems. A comprehensive complaints management program integrated with compliance management systems, therefore can serve as an “early warning system” that can let financial institutions know where they are at risk for regulatory action and help reduce the potential of legal and regulatory actions and sizeable monetary fines.
+
+For Financial Institutions managing customer satisfaction and costs is like walking a tight rope.
+Today's customers have become more demanding and new technology & products means issue banks have to spend more to keep customers engaged. Customers are taking to online and e-commere in droves and this has added complexities into various customer facing processes for financial institutions especially with disputes and chargebacks.
+
+Without solid wage increases, Americans now are maintaing their spending habits but savings far less than previously thought.
+How does this relate to the Credit Card Industry? 
+
+There is a increasing concern in the U.S. Consumer Spending which does have a factor on Credit Card Industry. 
+According to WSJ, last week's gross domestic product report showed that the personal saving rate- money saved as a share of after-tax income-came to just 3.8% in the second quarter, while the first-quarter saving rate was revised from 3.9% to 5.1%. Up until a year ago, the rate was between 5% and 6%. The saving rate isn't quite as low as it got during the housing buble, and its drop doesn't appear to stem from increasing indebtness. That doesn't mean it isn't worrisome. Consumer spending has been almost the only driver of the economy over the past year, but it appears consumers are reaching their limit unless incomes increase faster.
+
+The point is Consumer spending has been almost the only driver of the economy over the past year, but it appears consumers are reaching their limit unless incomes increase faster.  More jobs numbers like Friday's wil help, but the declining saving rate shows that jobs growth only goes so far. Without wage growth, U.S. companies may struggle to increase sales. The alternative is that employers, responding to a tighter labor market, start paying employees more, giving them the wherewithal to spend more.
+
+However, in this report, I plan on using a variety of tools available in R Programming to gather data and use data mining methods from CFPB database to uncover and insights from CFPB consumer complaints of financial institutions. Once I gather, process, and analyzed the data properly it would provide be a rich resource for me and financial institutions searching for emerging trends about consumer complaints relating to financial services products, including reasons for those complaints and actions financial insitutions are taking to resolve them. 
+ My main objective is to measure financial institutions response to consumer complaints posted on CFPB over time and common sentiments and feeddback associated with credit card holders. As I noted above, financial instiutions have a lot pressure from consumers to maintain customer satisfacation and needs. As I begin to dive into CFPB consumer complaint database which is open to public would give me the first step and a bit more understanding of consumers voices.
+
+I will perform text analysis of customer review data in order to examine the type of feedback that is provided by the consumer's complaint in CFPB.
+
+Another objective I have in mind for this project is data mine the CFPB and gather the insights THE CFPB complaints are valuable feedback to the financial insitutions and they can provide both direct and indirect insights into what a financial institution is doing well and what it needs to work on. 
+ 
+My plan is to get further get insights and trends from consumer complaints:
+  How fast does the financial institutions address to consumer complaints?
+  Does financial institutions respond in a timely fashion?
+  What are the most important aspects of a customer's complaint using CFPB?
+  What are the type of seniments that are commonly associated?
+  Are financial institutions providing reliable customer service? Or does there need be improvement?
+  
+On top of providing data-driven answers to these questions, I make recommendations for potential improvements to the financial institutions that belong to the credit card industry on how to handle their customers. In Section 2, I will discuss about how I acquired the dataset from CFPB. Once I have collected the data and stored it locally, Section 3,  I will discuss the exploration of the entire dataset to see emerging trends and insights. Also, you will find in this section analysis of the customer complaints on credit card companies and some recommendations. In Section 4, I will dive into the analysis of the customer complaint narrative providing insights and trends. In Section 5, I provided conclusion of the report, and analysis and outline potential areas for future work. My complete programming scripts used to complete this project, as well any additional information is posted on my Github repository.
+
+------------------------------
+
+##2. Data Acquisition from CFPB
+
+2.1 CFPB Website 
+Importing CSV file from CFPB database
+
+The dataset I plan uncovering the emerging trends about consumer complaints relating to financial services products, including reasons for those complaints and actions financial institutions are taking to resolve them.  CFPB still has their dataset available to the public. The dataset is available download on their competition website  https://www.consumerfinance.gov/data-research/consumer-complaints/#download-the-data.
+
+
+I imported the data from CFPB database as a CSV file and stored on my local drive. I checked at the structure of the CFPB consumer complaint narrative information on the issue of consumer who filing a complaint, the narrative aka the issue, Company, State, Zip Code, Tags, Timely Response and many more.
+
+I decided to get rid of columns Subproduct and SubIssue since under Credit Card Industry for CFPB there is no data in the field.
+
+Furtheralong, I will describe the limitations of the dataset in the section of data wrangling process from text mining process.
+
+```{r cars}
+Consumer.C <- read.csv("CC copy.csv", stringsAsFactors = FALSE)
+
+## checking out the structure of data frame
+str(Consumer.C)
+
+##number of rows and columns
+nrow(Consumer.C)
+ncol(Consumer.C)
+
+## libraries to load in this enviornment
+
+library(plyr)
+library(dplyr)
+library(tidyr)
+library(tm)
+library(wordcloud)
+library(ggplot2)
+library(stringr)
+library(syuzhet)
+library(psych)
+library(lubridate)
+library(jsonlite)
+library(syuzhet)
+library(lubridate)
+library(ggplot2)
+library(scales)
+library(reshape2)
+library(stringr)
+library(wordcloud)
+library(RColorBrewer)
+library(readr)
+library(Amelia)
+library(proxy)
+library(sentimentr)
+library(SnowballC)
+
+
+## let check the missing values
+missmap(Consumer.C)
+```
+
+##3 Exploration of Data: CFPB Consumer Complaint Database
+
+## 3.1 Overview of CFPB Consumer Complaint Database
+
+Having completed process of acquiring the CFPB data from the web which ended prety clean with exception of consumer complaint narrative field, now I can dive into the exploration and analysis stage. In this exploration, I am focusing on all variables given in the data set. As mentioned in the beginning of this report, the exploration and analysis of the consumers complaints informs to the Bureau about business practices that may pose risks to consumers. As I mentioned previously, complaints are vital feedback to CFPB and financial instituions and provide insights on what the financial instituions are doing well or not. Lastly, I can identify some trends and identify broader product and line of business service issues before they become systemic problems.  I used all variables in CFPB data set rather than focusing solely on variable, Consumer Complaint Database narrative for this exploration analysis. 
+
+I use the package tidyr,dpylr, and DT to conduct some data wrangling and exploration of the data before conducting some text analytics on CFPB consumer complaint narrative database. 
+
+I used glimpse function to get the information in a dense summary tabular format for the data. I was able to get a better overview of what is expected to come in the Capstone. The analysis focused on two parts the customer feedback to the financial instutitions using CFPB portal, and sentiment feedback to get insights and trends.
+
+While, I was conducting the exploration I used the dyplr and plyr package I selected the columms:
+     Date Recieved,
+     Product,
+     Company,
+     Issue,
+     Sub.Issue,
+     Company.response.to.consumer.,
+    
+
+We have overview 16,795 rows and 18 columns the dataset. I believe this would be enriching journey to uncover the power of complaints and insights from this database.
+```{r pressure, echo=FALSE}
+## Code for Text Analysis
+
+glimpse(Consumer.C)
+
+
+library(DT)
+
+## overview of the data 
+Consumer.C %>%
+  select(Date.received, Product, Company, Issue, Sub.issue, Company.response.to.consumer)  %>%
+  datatable(., options = list(pageLength = 10))
+```
+
+
+The next step that I did after looking the broader view of the data from CFPB consumer complaint database was to answer the two questions:
+   1) What are the common issues Consumers are complaining about?
+   2) What are the top financial insitutions receiving consumer complaints?
+   
+I wanted to discover what were the underlying Credit Card issues that consumers were complaining about to financial instutitions. The trend of complaint issues are: billing disputes, identity theft, and embezzlement, other, closing and cancelling account. This can infer that many consumers say that financial institutions must get identity theft protection right. Down below where I broke up by section. I explain what are the top issues are and some insights & research gathered into each issue.
+
+## 3.2 One of most common type of credit card complaints: Identity Theft
+When Credit Card customers experience identity theft, do they blame their financial institutions?
+In most cases, that tends to be the case, even if the incident of fraud did not occur through bank channels. According to CB Insight, "between 2013 and 2014, the number of consumers who switched financial institutions after experiencing fraud increased more than 10 percent,"(Bjerke, 2016).
+
+In addition to serious financial consequences, identity theft victims report usually experiencing a host of negative emotions, including frustration, or annoyance(79 percent) and anger(62 percent). They also experieince an erosion of trust in the mechanisms and institutions consumers thought should protect them(Bjerke, 2016).
+
+Its aware thats victims experience identity theft in three phases: prevention, detection, and resolution (Bjerke, 2016)
+
+I would like to investigate in further in another project to get into a deeper dive into the consumer complaint narrative and complaint issues.
+
+Suggestion to Financial Institution: As the financial services landscape becomes more competitive and  as regulators continue to increase their scrutiny of financial institutions' regulatory compliance performance.
+
+
+## 3.3 One of most common type of credit card complaints: Billing Disputes from Credit Card Industry
+ 
+ If I take a look at the graph, "Credit Cards Complaint Issue" down below you can see that billing disputes dominates as the most common type of credit card complaint. It seems to account around 17% of most common type of complaint.  Consumers complained about the application of payments to their accounts with multiple balances and different expiration periods that resulted from balance transfers, cash advances, or deferred internet purchases. These consumers expressed that they were inadequately informed of how their payments would be applied, and were surprise that payments were not applied to promotional or deferred interest balances with limited terms(CFPB, 2016).
+ 
+ This explanation does provide a reasoning behind why billing dispute dominates compare the rest of commmon credit card complaints. 
+ 
+ 
+## 3.4 Rest of common types of Credit Complaints from CFPB: 
+
+According to CFPB Annual Report provided actionable insights on why credit complaints issue. For example, consumers who recieved insurance products, warranty extensions, improved return policies, price protection services, and other similar benefits through their card programs complained about diffculties they reported experiencing while attempting to take advantage of these benefits.
+
+Another common issues that occured credit decisions including initial application decisions and servicing changes(e.g. interest rate adjustments, credit limit reductions)were frequently found in the subject of complaints(CFPB,2016)  Also, it seems that consumers complained of difficulty understanding determinations made by credit card companies and the reasons stated on letters explaining the decisions. These same consumers expressed concern regarding their exisiting terms on their credit report that they felt their creditworthiness. Other consumers expressed a belief that prejudice or bias may have impacted those credit decisions.
+
+
+
+```{r}
+## now lets move to companies that recieved the highest number of complaints by issue 
+ Consumer.C %>% 
+    group_by(Company) %>% 
+    dplyr::summarize(comments = n()) %>%
+    mutate(percent=round((comments/sum(comments)*100))) %>%
+    arrange(desc(comments)) 
+  
+
+ ggplot(Consumer.C, aes(x=Issue)) +
+   geom_bar() +
+   coord_flip() +
+   ggtitle("Credit Cards - Complaint Issue") + 
+   xlab("") + 
+   ylab("N")
+```
+
+ 
+Consumers report issues with fraudulent charges which referes to common issue-unsolicited issuance of credit card:
+Consumers complain about being billed for charges that were not initiated by them or other authorized users on their account(CFPB, 2016). Consumers describe difficulties in having these charges removed even after receiving notification from their card company that the dispute had been resolved in their favor.
+
+Consumers complain about confusion over reward programs: 
+Consumers report issues with taking advantage of offered benefits after meeting requirements of bonus points programs, miles programs, cash back programs, and travel benefits programs. Some consumers said that online information about the programs differed from what they were told by customer service representatives(CFPB, 2016).
+
+Consumers report being victims of identity theft: Consumers complain about credit card accounts being fraudulently opened in their name even after an alert was placed on their credit file(CFPB, 2016).
+
+## 3.5  Top 10 Companys recieve Complaints
+
+   In this Table 1 up above displays the top ten credit card companies that recieve the most complaints from insitutions. Also, the CFPB published that as of March 1, 2017, the Bureau had handled approximately 116,200 credit card complaints. Some of the findings in the snapshot include:
+Companies with the most credit card-related complaints: The three companies that the Bureau has received the most average monthly complaints about are Citibank, Capital One, and JP Morgan Chase(CFPB,2017)
+   
+   The CFPB's strategic plan through 2017 includes goals that relate specifically to the Bureau delivering effective response to customer complaints and conducting supervisory examinations that will assess an institution's compliance management systems(CMS).  The level of transparency sought by the CFPB serves increasingly as a means to help the Bureau regulate the financial services industry and impose enforcement actions or fines needed. This focus also means that institutions should dedicate suffficent and qualified resources to increase their capacity for managing complaints in order to get ahead of curve.
+   
+   My recommendation to the top companies listed in this table such as Citibank,Capital One, and others to avoid financial regulators forcing major customer complaint-centric enforcement actions including fines against them. They should try to perform internal audits and testing, or develop new policies and procedures, execute new remediation projects and implement new compliance plans often within short timelines (Rollauer & Graetz, 2016). They can build an early warning system  They should try develop new communication strategy to their consumers and ongoing training to their employees to ensure this type of culture
+   
+   In the second graph, I produced another graph in better visualize.  Both table and graph display that the bigger banks such as JP Morgan Chase, Capital One, and Citibank may have a larger base of customers and also more likely prone to financial errors like overbilling. This is my hypothesis. I would like to investigate further. This is my takeaway of this graph.
+   
+  
+
+```{r}
+## Consumer Complaints
+by_company <- Consumer.C %>% 
+   group_by(Company) %>% 
+   summarise(Count = n()) %>% arrange(desc(Count))
+ 
+ head(by_company,10)
+ 
+ ggplot(head(by_company, 10), aes(reorder(Company, -Count), Count, fill = Company)) + geom_bar(stat = "identity") + xlab("Product") + ylab("Number of Complaints") + theme(axis.text.x = element_text(angle = 50, size = 10, vjust = 0.4, face = "bold"), plot.title = element_text(size = 20, face = "bold", vjust = 2),axis.title.x = element_text(face = "bold", size = 15, vjust = -0.35),axis.title.y = element_text(face = "bold", vjust = 0.35, size = 15)) + theme(legend.position = "none")
+ 
+comments <- Consumer.C$Consumer.complaint.narrative
+
+
+## State  Lets take a look number of dispute by state
+
+
+by_company <- Consumer.C %>% 
+   group_by(Company) %>% select(Company) %>% 
+   summarise(Count = n()) %>% arrange(desc(Count))
+ 
+ head(by_company,10)
+ 
+ ggplot(head(by_company, 10), aes(reorder(Company, -Count), Count, fill = Company)) + geom_bar(stat = "identity") + xlab("Product") + ylab("Number of Complaints") + theme(axis.text.x = element_text(angle = 50, size = 10, vjust = 0.4, face = "bold"), plot.title = element_text(size = 20, face = "bold", vjust = 2),axis.title.x = element_text(face = "bold", size = 15, vjust = -0.35),axis.title.y = element_text(face = "bold", vjust = 0.35, size = 15)) + theme(legend.position = "none")
+ 
+comments <- Consumer.C$Consumer.complaint.narrative
+```
+
+## 3.6 Exploration of CFPB complaints by State
+
+
+
+```{r}
+## State  Lets take a look number of dispute by state
+
+by_state <- Consumer.C %>% group_by(State) %>% 
+  select(State) %>% summarise(Count = n()) %>% arrange(desc(Count))
+
+head(by_state, 10)
+tail(by_state, 10)
+
+ggplot(head(by_state, 10), aes(reorder(State, -Count), Count, fill = State)) + 
+  geom_bar(stat = "identity") + xlab("State with the Most Amount of Complaints") + 
+  ylab("Number of Complaints") + 
+  theme(axis.text.x = element_text(angle = 50, size = 10, vjust = 0.4, face = "bold"), plot.title = element_text(size = 20, face = "bold", vjust = 2),
+        axis.title.x = element_text(face = "bold", size = 15, vjust = -0.35),axis.title.y = element_text(face = "bold", vjust = 0.35, size = 15)) + theme(legend.position = "none" )
+
+ggplot(tail(by_state, 10), aes(reorder(State, -Count), Count, fill = State)) + 
+  geom_bar(stat = "identity") + xlab("State with the Least Amount Complaints") + 
+  ylab("Number of Complaints") + 
+  theme(axis.text.x = element_text(angle = 50, size = 10, vjust = 0.4, face = "bold"), plot.title = element_text(size = 20, face = "bold", vjust = 2),
+        axis.title.x = element_text(face = "bold", size = 15, vjust = -0.35),axis.title.y = element_text(face = "bold", vjust = 0.35, size = 15)) + theme(legend.position = "none" )
+
+```
+
+
+The table presents top 10 states where consumers filed compalints to the CFPB present that the top heavily populated in California, New York, Florida, Texas, New Jersey, and Pennslysvania.
+
+California, New york, Florida, Texas state populations have more than 4 figures of complaints.I observed that New York, Flordia, Texas. I am going to showcase a couple of states facts from CFPB Monthly Compalint Report where CFPB provided statistical facts on its own on each state dating back 2011. In addition to, CFPB gave insight on how much each state complaints from consumers narratives were published since 2015.
+
+*According to CFPB Monthly Complaint Report Data in New York:
+   + total of 74,072 complaints
+   + 2,430 servicemember complaints 
+   + 47% narratives published since 2015
+   + The number of Credit Card complaints filed in New York state is 10,445 which accounts 10% of USA consumer who filed complaints in the year of 2015-2017.(CFPB,2016)
+   + Billing Disputes account of 19%(1,934).
+   + 10,445 NY Complaints that are related to Credit Cards
+      + accounts 10% of US total 
+      + 19% Billing Disputes (1,934)
+      
+    
+*CFPB Monthly Complaint Report Data in California:
+    + Billing Disputes account 16%(2,441)
+      + mentioned in the previous graph where display top complaint issues this does show that major trend of consumers complain about towards financial insitutation about their credit cards is billing dispute. 
+    + CFPB has handled over 159,158 complaints since 2011
+    + 14,933 older consumer complaints since 2011
+    + 7% complaints handled in 2016 than 2015. 
+    + 97% Timely company responses since 2011
+    + 52% Narratives published since 2015
+    + 15,742 CA Complaints that are related to Credit Cards
+      + accounts 10% of US total 
+      + 16% Billing Disputes (2,441)
+    
+
+*CFPB Monthly Complaint Report Data in Texas:
+    + 93,472 complaints handled since 2011
+    + 9& Complaints handled in 2016 than 2015
+    + 51% Narratives published since 2015
+    + 7,534 TX Complaints that are related to Credit Cards
+      + accounts 23% of US total 
+      + 16% Billing Disputes
+    + Credit Card has since major percent change in terms of more complaints in 2016, 442 consumers complaint about Credit Cards. However, in the year of 2017 Q1, 502 complaints have been filed as of then.
+    
+*CFPB Monthly Complaint Report Data in New Jersey:  
+
+  + 43,462 complaints since 2011
+  + 1,710 Servicemember complaints since 2011
+  + 3,378 Older consumer complaints since 2011
+  + 8% Complaints handled in 2016 than 2015
+  + 98% Timely company responses since 2011
+  + 53% Narratives published since 2015
+    + 6,350 NJ Complaints that are related to Credit Cards
+      + accounts 11% of US total 
+      + 19% Billing Disputes (961) out of 4.957
+    
+*Lastly, I want to present CFPB Monthly Compalint Report Data in Virginia because it is my home state:
+    + 35,954 compalints since 2011
+    + 7% complaints handled in 2016 than 2015
+    + 97% Timely company responses since 2011
+    + 52% Narratives published since 2015
+    + 12% Credit Reporting has seen % change since last quarter which was 2016 Q4, 337 and 2017 377 compalints filed related to Credit Cards.
+    + 3,846 VA Complaints that are related to Credit Cards
+      + accounts 11% of US total 
+      + 15% Billing Disputes (581) out of 3.846
+    
+I want to discover what were the states submitted the least amount of claims.  It seems that the top 3 states are biggest amount of claims in the category of least are North Dakota, South Dakota and Wyoming.
+
+*CFPB Monthly Complaint Report Data in North Dakota:  
+
+      + 1,184 complaints handled since 2011
+      + 116 Servicemember complaints since 2011
+      + 59 older consumer complaints since 2011
+      + 6% complaints handled in 2016 than 2015
+      + 97% Timely company responses since 2011
+      + 55% Narratives published since 2015
+      + Number of Complaints submitted about Credit Cards is 118
+        + Billing Disputes 22%(26) out of 118
+      
+*CFPB Monthly Complaint Report Data in North Dakota:  
+
+      + 1,773 complaints handled since 2011
+      + 137 Servicemember complaints since 2011
+      + 148 older consumer complaints since 2011
+      + -4% complaints handled in 2016 than 2015
+      + 95% Timely company responses since 2011
+      + 50% Narratives published since 2015
+      + Number of Complaints submitted about Credit Cards is 231
+        + Billing Disputes 16%(36) out of 231
+        
+        
+ *CFPB Monthly Complaint Report Data in Wyoming:  
+
+      + 1,245 complaints handled since 2011
+      + 127 Servicemember complaints since 2011
+      + 113 older consumer complaints since 2011
+      + 6% complaints handled in 2016 than 2015
+      + 94% Timely company responses since 2011
+      + 52% Narratives published since 2015
+      + Number of Complaints submitted about Credit Cards is 124
+        + Billing Disputes 30%(36) out of 124      
+        
+The states with the least number of complaints again:
+Based on this information, and graphs, I can infer there is a huge trend that Billing dispute is a common issue among the complaints against the Credit Card Industry no matter what state the consumer is residing from.  The range of Billing dispute is from 15% to 30% of total state complaints. I theorized that if a state had a stable economy, bigger population, and more metropolitian area that there not sa much credit card complaints compare to the States with the least amount of complaints. My hypothesis was proven wrong very completely. Perhaps, consumers 
+
+that there is no correlation on how much credit  between of how big a state population such as New York is a heavily populated state compare to a state with smaller size such as Wyoming. In any case, it doesn't seem that it matters from what state a consumer is from that they may complain about their Credit Cards such as billing disputes.  My hypothesis was that if a state that had a healthier economy may less likely to face Credit Card debt. Perhaps, I would have to take a deeper dive into this data. 
+    
+    
+    
+```{r}
+## Timely Response
+
+table(Consumer.C$Timely.response.)
+
+prop.table(table(Consumer.C$Timely.response.))
+
+
+## consumer Dispute
+
+head(Consumer.C$Consumer.disputed., 10)
+
+table(Consumer.C$Consumer.disputed.)
+prop.table(table(Consumer.C$Consumer.disputed.))
+
+
+## Submitted Via
+
+table(Consumer.C$Submitted.via)
+
+prop.table(table(Consumer.C$Submitted.via))
+
+ggplot(Consumer.C, aes(reorder(Submitted.via, -table(Consumer.C$Submitted.via)[Submitted.via]), fill = Submitted.via)) + geom_bar() + xlab("Mode of Complaints Submission") + ylab("Number of Complaints") + scale_y_continuous(breaks = seq(0,350000,50000)) + theme(axis.text.x = element_text(angle = 50, size = 10, vjust = 0.4, face = "bold"), plot.title = element_text(size = 20, face = "bold", vjust = 2),axis.title.x = element_text(face = "bold", size = 15, vjust = -0.35),axis.title.y = element_text(face = "bold", vjust = 0.35, size = 15)) + theme(legend.position = "none")
+
+
+```
+
+##3.7 Exploration on Timely Response of Credit Card Companies
+
+Complaint resolution response time have improved over in time. Despite some remaining challenges, financial institutions appear to have improved their effectivness at addressing complaints. As described above, in the prop tables describing Timely Response that almost 99% had been addressed in a timely manner to resolve the consumer dispute.
+
+Obviously, most of the customer didn't have disputation with the company, however, there are still 20% people have it. This result means that it is necessary to find which attribute might cause disputation.
+
+Looking at the consumer complaints, I can observe that the general trends are 99% of the time financial institutions address in a timely fashion out of 16645 complaints. All consumers submit complaints via web which is a huge indicator to CFPB to continue to enhance and maintain the CFPB website.
+
+The table for Timely Response surprised me in a way that disprove my hypothesis regarding the financial institutions are improving their operations and procedures to improve customer experience. Given this, foundation, the next area of focus for my studies is whether financial insitutitions should consider is using the database and their improved processes to proactively remediate root causes of more prevalent complaint issues.
+
+Almost 98% of the complaints had been addressed in timely manner under the CFPB have been addressed timely. Also, in the Consumer Dispute prop table, suggest more than 20 percent have not resulted in their favor and disputed, the data suggests that many complaints may be the result of customer misunderstanding, or frustration rather than actual mistakes or operatoinal errors by financial institutions. Given, the competition in the financial sector, my recommendation to financial institutions is to foster better communication with customers may help firms manage consumer expectations as well as help inform firms about how to improve their processes to address future frustrations.
+
+Ultimately, of fewer complaints closed with relief, consumers have been disputing fewer resolutions by 32%.(Note:(11941) have not disputed, consumers disputed (3934)) In a future report, I would like to investigation of a time series, where I can see how it affects on a monthly or year basis. That would be my next approach in a future capstone project with this dataset. 
+
+If I look at this broader view, this would indicate to me fewer disputes despite less relief may not seem logical. However, the data proving to me this new trend that perhaps there is more action or upkeep to retain teh customer satfiscation than merely providing relief. My recommendation to financial institutions take some big steps to establish a better communication strategy with consumers. The Credit Card Companies make some big steps to change culture establish an ongoing training and communications trategy on complaints management can help employees to get onboard with their organizatoin's new complaints perspective, setting a tone at the top that lets workers know it's okay to bring complaints, and the underlying root causes behind them, to the light.
+
+Yes, putting into motion a comprehensive plan to pull value out of complaints take a lot of hard work. Staying ahead of compettive and regulatory pressures takes work, too. And figuring out what steps to take to begin transforming your organization, while perhaps daunting at first, is an important move forward in today's financial regulatory environment.
+
+
+
+
+```{r}
+## Time Taken to send the complaint to company
+
+Consumer.C$Date.received <- as.Date(Consumer.C$Date.received, "%m/%d/%Y")
+
+#Consumer.C$Date.sent.to.company <- as.Date(Consumer.C$Date.sent.to.company, "%m/%d/%Y")
+
+#Consumer.C$Date.sent.to.company <- difftime(Consumer.C$Date.sent.to.company, Consumer.C$Date.received , units = c("days"))
+
+Consumer.C$Date.sent.to.company <- as.numeric(Consumer.C$Date.sent.to.company)
+
+summary(Consumer.C$Date.sent.to.company)
+
+dim(Consumer.C[Consumer.C$Date.sent.to.company > 100, ])
+
+dim(Consumer.C[Consumer.C$Date.sent.to.company > 500, ])
+
+dim(Consumer.C[Consumer.C$Date.sent.to.company > 900, ])
+```
+
+
+
+# 4) Text Analytics: Data Acquisition
+
+Now I started to do some data wrangling on the dataset for CFPB complaint consumer narrative because once I start doing some text analytics and convert into a corpus.
+
+ The task is to put the text files in one structured file referred to as a Corpus. The number of documents could be just one, or dozens. With the corpus created, the data preparation can begin with the text presentation. I removed string characteristics that contained any special charracters such as XXX infront of numbers or personal accounts, any stop words, converted text to lower case, removed white space and stop words.
+
+
+```{r}
+## Code for Text Analysis
+
+Consumer <- read.csv("CC copy 2.csv", stringsAsFactors = FALSE)
+
+Consumer$Sub.product <- NULL
+Consumer$Sub.issue <- NULL
+
+glimpse(Consumer)
+
+comments <- Consumer$Consumer.complaint.narrative
+
+writeLines(as.character(Consumer[[4]]))
+
+#nohandles <- tolower(comments)
+
+nohandles <- str_replace_all(comments, "XXXX","")
+#nohandles <- str_replace_all(comments, "{\\","")
+nohandles <- str_replace_all(comments,"[^[:graph:]]", " ")
+nohandles <- sapply(comments,function(row) iconv(row, "latin1", "ASCII", sub=""))
+
+s_v <- get_sentences(nohandles)
+
+wordCorpus <- Corpus(VectorSource(s_v))
+
+
+
+```
+
+
+
+ 
+##4.1) Data Wrangling and Pre-Processing:
+ 
+As you know Preparation is half the battle when, it doesn't come as a surprise that cleaning the data took 80% of my time. Textual data can be so unstructed. As I started the process of cleaning the dataset, I knew Sub.Product and Sub.Issue field not relevant to the Credit Card Industry for CFPB I decided to get rid of those columns for this analysis purposes. For the field, called consumer complaint narrative, it is unstructured and needs to be cleaned. I found while conducting the cleaning process, I listed the steps that need to be done to normalize the text in the reviews:
+
+
+  1) Remove unecessary NA values from CFPB dta set
+  2) Remove unecessary values from Consumer Complaint Narrative data
+  3) Removing stop words such as "that" or and
+  4) Remove the duplicate truncated reviews from CFPB Consumer Complaint
+  5) Stemming, which I used to extract the root of words.
+  6) Merge all CFPB consumer complaint into a data frame
+  7) Clean up all dates and convert to date class
+  8) Clean up reviews as needed
+  
+The libary packages I used are TM, which has built in functions, that helped me to conduct stemming and remove stop words, eliminate white space and convert the words to lowercase.
+  
+ 
+Stemming Process:
+ A large corpus will contain many words that have a common root such as offer. Stemming is the proccess of reducing such related words to their common root, which in thsi case would be the also. 
+
+  On another important note, the output of corpus also shows up a problem or two.  Some words like orgniz and organis are actually variants of the stem organ. Clearly, they should be merged. Second, the word and govern should be seperated out into and govern. These can and should be fixed up before proceeding. 
+    
+    
+    
+```{r}
+#Remove URLs
+
+wordCorpus <- tm_map(wordCorpus, removePunctuation)
+wordCorpus <- tm_map(wordCorpus, content_transformer(tolower))
+wordCorpus <- tm_map(wordCorpus, removeWords, stopwords("english"))
+wordCorpus <- tm_map(wordCorpus, removeWords, c("one","get","will","just","make","even","also","got","now", "to","is", "the","in","and","for","a", "of","at", "and", "by","told","many","however","still","every","credit","card","instead","yet","try","say","tried","per","much","take","tell","etc","within","used","use","please","believe","took","like"))
+wordCorpus <- tm_map(wordCorpus, stripWhitespace)
+#wordCorpus <- tm_map(wordCorpus, PlainTextDocument)
+
+### Word Clouds###################################################
+wordcloud(wordCorpus, min.freq = 100, scale = c(4,0.5),
+          max.word=500, random.order=F, colors=brewer.pal(8, "Dark2"))
+
+
+```
+
+## 4.2 CFPB Customer Complaints on Credit Card Companies Text and Sentiment Analysis
+    
+In the prevous section, I performed data cleaning and text analytics on the CFPB
+
+
+  1) What are common issues consumers face with credit card companies?
+  2) Do financial insitutions respond well with the new CFPB complaint database now implemented?
+  3) Have they improved their process over in time?
+
+
+Now at this stage, I'll dive into the CFPB customer complaints using a number of methods in text analysis. In section 4.2.1, I'll perform an analysis of the full set of CFPB review data in order to get an idea of the general sentiment towards CFPB customer complaints towards Credit Card companies. The analysis will be performed using the following R packages tm, wordcloud, syuzhet, and stringR.
+
+On the wordcloud, most frequent words that appear most frequently in all of the CFPB consumer complaints for Credit Card industry are "account", "payment", "bank",  and "balance". I can immediately gather a number of insights from these results. The first is account is the single most important aspect of CFPB consumer complaint in the database regarding the Credit Card Industry. 
+Besides, the word "account",  besides "payment" which is the second word appeared most frequently. This is the top 8 words commonly appear which says a lot about consumer experience with credit card, "never", "late",  "charges", "fee"  have connotation of a negative sentiment. What I can infer 
+
+
+The above is the sentiment Analysis of the responses, it clearly indicates though there is a trust in the system that the issue will get resolved, However it is worrying to see that Emotions like Anger, Disgust, Fear and Sadness are also significant, which clearly indicate that the overall customer responsiveness including the quality and speed of customer grievance tackling needs to be improved significantly. 
+
+
+My suggestion proactively managing complaints involves more than simply responding to customers and remediating complaints on an ad-hoc basis. Institutions focused on proactive management understand that managing complaints effectively is essential and includes assigning business value to complaints. 
+
+In Section 3, Exploratory Analysis of Credit Cards: Credit Card complaints that did not c
+
+##4.3 Association Analysis
+
+To analyze the textual data, we use a Document-Term Matrix (DTM) representation: documents as the rows, terms/words as the columns, frequency of the term in the document as the entries. Because the number of unique words in the corpus the dimension can be large.
+
+The tm package provides the findAssocs(function)to find the most frequently occuring terms in hand and check for correlations between some of these and other terms that occur in the corpus. Correlation is a quantative measure of the co-occurance of words in mulitple documents.  I want to dive a bit deeper into gaining more insight what customer are talking about in the complaints.  This is done by using the tm::findAssos() function. 
+
+We find the word "account" is commonly associated with positive descriptors like "closed" within the negative reviews. 
+
+
+```{r}
+#Association Analysis
+
+##DOcument term Matrix#########################################
+
+dfTDM <- TermDocumentMatrix(wordCorpus)
+
+findAssocs(dfTDM, 
+           c("account","service", "dispute","phone", "capital"),
+           c(.30, .20, .15, .15, .15))
+findAssocs(dfTDM, 
+           c("balance", "interest", "days", "charges", "information"),
+           c(.10, .20, .20, .20, .20))
+
+
+findAssocs(dfTDM, "dispute", .15)
+findAssocs(dfTDM, "balance", .10)
+findAssocs(dfTDM, "interest", .20)
+findAssocs(dfTDM, "days", .20)
+findAssocs(dfTDM, "charges", .20)
+findAssocs(dfTDM, "phone", .10)
+findAssocs(dfTDM, "information", .20)
+findAssocs(dfTDM, "capital", .15)
+
+
+```
+
+
+As anticipated, I discovered the words that are found in the consumer complaint narrative word cloud is Service, and Payment.
+
+I found interesting most frequently words associated with the word comes no surprise closed. What I can infer perhaps some of consumers complained that they want close their accounts from financial institutions due to a number of issues could be billing, identity theft, dispute chage, or other.
+
+I find that the word "information" is strongly associated is reporting and second is "provide". Most of the words that show up indicated additional associations to the word "information" within inaccurate, and furnisher. These findings suggest that consumers often disagree or complain about Credit Card Companies business handling their accounts especially when I see the word, "inaccurate" appear as a strong associated. This would be a bit of a negative sign. It does support my hypothesis that the financial institutions must customer service performance and improve business processes.
+
+The word, "disputed" is strong associated to disputing,.32 or dispute but here goes to show that stemming needs to be a bit more cleaned. The second word,  by .31 is "merchant"  or by .27 is "charge" which could indicate a dispute charge against a merchant who may have double charge or the customer did not recognize the charge of the card. There could be endless of possibilites.  I want to highlight a bit of other words associated with "disputed" which are the following: "favor", "documents", "filed", "supported", which means along the way the consumer has provided some form of documentation or perhaps may have misunderstand the process of financial institution to file a dispute claim.  There could be endless possibilities. In my further research, I would like to take a deeper dive by using Natural Language Processing on the consumer complaints narratives. 
+
+The word "charged" suggests that consumers are oftening commenting on the fraud claims because the strongly associated words are "fradulent" and "unauthorized". These type of word association translates negative sentiment which does explain a lot when I conducted sentiment analysis because even when consumers filed a complaint against the financial institutions in the credit card industry there is a huge degree of negative sentiment from anger to depressed. 
+
+The word "balance" suggests that consumers use the feature balance transfer since that is the most strongly associated word, "transfer". Second strongest word associated with it is, "paid".  
+
+I randomly was curious to see what words were strongly associated with days and what kind of sentiment would come out of the consumer complaint narrative description. It turns out that it is, "advertising market", "builtin", "called". What I can infer from this trend is perhaps consumers were decevied from a advertising market ad and attempted to call the customer service of the financial institution which resulted them filing a complaint. It suggest there are some negative sentiment.  The strong association for "capital" is with the word "correspondence", "argueing", "brake", "shipping", and "supporting" whichh reinforces the idea that credit card and customer service do go in hand.
+
+
+In the Sentiment Analysis of responses it clearly indicates though there is a trust in the system that the issues will get resolved. However, it is worrying to see that Emotions like Anger, Digust, Fear and Sadness are also significant, which clearly indicate that the overrall customer responseviness including the quality and speed of customer grievance tackling needs to be improved significantly. While conducting the analysis and exploration, the narratives and top complaint issues filed by consumers provide this evidence there is a huge distrust, frustration range of emotions with the system. 
+
+As stated in CFPB annual report,"Consumers expressed frustration with various fees and additional costs associated with their credit cards. For example, although consumers appear to understand why late fees are assessed to their accounts, many felt that the fees should not be applied when an automatic payment failed or when a billing statement did not arrive in a timely manner."
+
+Another discovery from CFPB annual report and conducting this analysis as stated in Section 3.4 that consumers express concern sadness or fear about how closure of their account can negatively effect on their credit score.
+
+In the second graph labeled "Reviews", down below, I interept that emotional Valence analysis seems to further indicate that customer grievance management has not been very consistent as we can see significant swings in the value of Emotional Valence, Hence it is recommended that more detailed analysis should be conducted to identify specific pain points for customers and remediation programs must be launched with specific timelines in mind.
+
+
+My recommendation for companies need to set up a early warning system. the fist step could be have an early comprehensive complaints-management program integrated with the compliance management system can serve as an "early warning radar system" that can let financial institutions know where they are at risk for regulatory action. Finacial Institutions should consider investing in high quality complaint intake capabilites across all chanells as a prequisite to developing strong detection capabilities.
+
+
+```{r}
+score.sentiment = function(sentences, pos.words, neg.words, .progress='none')
+{
+  scores = laply(sentences, function(sentence, pos.words, neg.words) {
+    sentence = gsub('(?![<>+])[[:punct:]]', '', sentence, perl=TRUE)
+    sentence = gsub('[[:cntrl:]]', '', sentence)
+    sentence = gsub('\\d+', '', sentence)
+    
+    #Error handling for tolower conversion
+    tryTolower = function(x){
+      y = NA
+      try_error <- tryCatch(tolower(x), error=function(e) e)
+      if (!inherits(try_error, "error"))
+        y = tolower(x)
+      return(y)
+    }
+    sentence = sapply(sentence, tryTolower)
+    word.list = str_split(sentence, '\\s+')
+    words = unlist(word.list)
+    pos.matches = match(words, pos.words)
+    neg.matches = match(words, neg.words)
+    pos.matches = !is.na(pos.matches)
+    neg.matches = !is.na(neg.matches)
+    score = sum(pos.matches) - sum(neg.matches)
+    return(score)
+  }, pos.words, neg.words, .progress=.progress )
+  scores.df = data.frame(score=scores, text=sentences)
+  return(scores.df)
+}
+
+pos.words <- scan("positive-words.txt",what='character', comment.char=';', fileEncoding="utf-8")
+neg.words <- scan("negative-words.txt",what='character', comment.char=';', fileEncoding="utf-8")
+
+scores <- score.sentiment(s_v, pos.words, neg.words, .progress='text')
+
+mean(scores$score)
+hist(scores$score, col = 'light blue', main = "Histogram of Sentiment Score",
+     xlab = "Sentiment Score")
+
+comments_sentiment <- get_nrc_sentiment(s_v)
+
+sentimentTotals <- data.frame(colSums(comments_sentiment))
+names(sentimentTotals) <- "count"
+sentimentTotals <- cbind("sentiment" = rownames(sentimentTotals), sentimentTotals)
+rownames(sentimentTotals) <- NULL
+
+ggplot(data = sentimentTotals[1:8,], aes(x = sentiment, y = count)) +
+  geom_bar(aes(fill = sentiment), stat = "identity") +
+  theme(legend.position = "none") +
+  xlab("Sentiment") + ylab("Total Count") + ggtitle("Sentiment Score for All Comments")
+########################## You may stop here####################################
+
+#afinn_vector <- get_sentiment(s_v, method="bing")
+
+
+#ft_values <- get_transformed_values(
+#  afinn_vector,
+#  low_pass_size = 5,
+#  x_reverse_len = 100,
+#  scale_vals = TRUE,
+ # scale_range = FALSE
+#)
+#plot(
+#  ft_values,
+#  type ="h",
+  #main ="Reviews",
+ # xlab = "Narrative Time",
+ # ylab = "Emotional Valence",
+ # col = "red"
+#)
+```
+
+## 5) Conclusion, Recommendations and Future Directions
+
+In simple words, all my objective was to take a closer look at these observations can help financial institutions understand their own internal complaint issues and databases as they relate to data from Consumer Complaint Database and use the resulting insights to potentially improve their regulatory compliance efforts, customer experience, and their own operational effectivness. In the second step, which I undertook the exploration of the entire dataset I tried taking a broader view of the dataset to answer a couple of questions:
+
+   1) What are the common issues Consumers are complaining about?
+   2) What are the top financial insitutions receiving consumer complaints?
+   3) How fast does the financial institutions address to consumer complaints?
+   4) Does financial institutions respond in a timely fashion?
+   5) What are the most important aspects of a customer's complaint using CFPB?
+   6) What are the type of seniments that are commonly associated?
+   7) Are financial institutions providing reliable customer service? Or does there need be improvement?
+
+I was able to find the answers to that which is located in Section 3.2 thru 4.3.
+   
+The CFPB does not assess complaints for accuracy and the Database does not differentiate complaints by issue severity or risk. How was I able to gather these insights? Using some methods and tools that can be used in R programming to gather, process, and analyze of CFPB consumer data. In Section 2.1 thru 2.3, conducted explatory analysis on the dataset. I was able to find the answers what were the common and top consumer issues found in the consumer financial protection database. The top common issues were billing, identity theft/fraud, closing/cancellation account, and many more. In Section 3.2, and 3.3, I discussed about the common billing issues such as identity theft, and billing disputes what research has been found that is common the consumers. Consumers seem to place the blame on their identity being stolen when he or she holds a credit card.  The top credit card complaint is billing disputes continue to be the most common type of credit card complaint. Consumers complained about the application of payments to their accounts with multiple balances different expiration periods that resulted from balance transfers, cash advances, or deferred interest purchases. 
+
+The Sentiment Analysis, Word Cloud, and Association Rules indicated several insights and growing trends that were discover the common frequently words appear, credit limits continue to be the common theme amongst the subject complaint. My recommendation for companies need to set up a early warning system. the fist step could be have an early comprehensive complaints-management program integrated with the compliance management system can serve as an "early warning radar system" that can let financial institutions know where they are at risk for regulatory action. Finacial Institutions should consider investing in high quality complaint intake capabilites across all chanells as a prequisite to developing strong detection capabilities.
+
+The next steps I would take in the near future are the following:
+1) Use Natural Language Processing to gain further insight and trends on teh consumer complaint
+2) Perform a customer segmentation on age group
+
+
+
+
+
+
+
+
+
+
+
+
